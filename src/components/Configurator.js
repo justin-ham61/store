@@ -15,10 +15,8 @@ const Items = () => {
     //0 = dry, 1 = laundry, 2 = other
     const [ category, setCategory ] = useState(listItemsDry);
     const [ itemSelection, setItemSelection ] = useState({});
-    const [ cart, setCart ] = useState({});
-    const [ cartLength, setCartLength ] = useState(0);
-    const [ addedItems, setAddedItems ] = useState([]);
-    const [ showItemOptions, toggleItemOptions ] = useState(false);
+    const [ cart, setCart ] = useState({})
+    const [ cartLength, setCartLength ] = useState(0)
 
     useEffect(() => {
         setListItemsDry([])
@@ -135,17 +133,25 @@ const Items = () => {
                 {category.map((item) => {
                     return (
                     <div className='item' key={item.item_id}>
+                        <div>image</div>
                         <div className='item-info'>
-                            <p>{item.item_name} - ${item.item_price}</p>
+                            <p>{item.item_name}</p>
+                            <p>${item.item_price}</p>
                         </div>
                         <div className='item-count'>
-                            <FontAwesomeIcon icon={faCircleMinus} className={item.item_name} onClick={() => handleItemRemove(item.item_name)} id='subtract'/>
+                            <FontAwesomeIcon icon={faCircleMinus} className={item.item_name} onClick={() => handleItemRemove(item.item_name)}/>
                             <input key={item.item_id} name={item.item_name} type="number" value={itemSelection[item.item_name]} onChange={handleChange} placeholder='0' onWheel={(e) => e.target.blur()}/>
-                            <FontAwesomeIcon icon={faCirclePlus} className={item.item_name} onClick={() => handleItemAdd(item.item_name)} id='add'/>
+                            <FontAwesomeIcon icon={faCirclePlus} className={item.item_name} onClick={() => handleItemAdd(item.item_name)} />
                         </div>
                     </div>
                     )
                 })}
+            </div>
+        </div>
+        <div className='item-config-section'>
+
+            <div className='add-item-row'>
+                <button type='button'>Add Item</button>
             </div>
         </div>
     </div>

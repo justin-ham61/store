@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { animation } from './hoc'
+import { Link } from 'react-router-dom';
 
 
 const Info = () => {
@@ -12,48 +14,58 @@ const Info = () => {
         'Custom'
     ]
 
+    const Items = () => {
+        console.log('go to items')
+    }
+
   return (
     
-    <div className='info sub-section'>
+    <div className='info'>
       <div className='left-info'>
         <div className='left-left'>
             <h2>How - To</h2>
             <div className='left-main'>
-                <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft}/></div>
                 <div className='instructions'>
-                    <h1>{orderType}</h1>
+                    <h3>{orderType}</h3>
 
                     {orderType == "Express" ? 
                     <div>
                         <ol>
-                            <li>Gather all items to be laundered</li>
-                            <li>Place in bag</li>
-                            <li>Schedule Pick up date mon-fri after 6pm</li>
-                            <li>Trust us to figure out what has to be done for each of the items</li>
+                            <li><p>Gather all items to be laundered</p></li>
+                            <li><p>Place in bag</p></li>
+                            <li><p>Schedule Pick up date mon-fri after 6pm</p></li>
+                            <li><p>Trust us to figure out what has to be done for each of the items</p></li>
                         </ol>
                     </div> : 
                     <div>
                         <ol>
-                            <li>Gather your garments</li>
-                            <li>Get a count of each item</li>
-                            <li>Proceed to the product page</li>
-                            <li>Add to your shopping card the correct number of items</li>
+                            <li><p>Gather your garments</p></li>
+                            <li><p>Get a count of each item</p></li>
+                            <li><p>Proceed to the product page</p></li>
+                            <li><p>Add to your shopping card the correct number of items</p></li>
                         </ol>
                     </div> 
                     }
 
                 </div>
+            </div>
+            <div className='chevs'>
+                <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft}/></div>
                 <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronRight}/></div>
             </div>
             <div className='left-btns'>
-                <button>Customize Order</button>
-                <button>Express Order</button>
+                <button onClick={Items}>Customize Order</button>
+                <button><Link to="/Express">Express Order</Link></button>
             </div>
         </div>
         <div className='left-right'>
-            <h2>Order Status</h2>
-            <div className='order-status'>
-                Please Sign-in to see orders
+            <h2>About Us</h2>
+            <div className='info-about'>
+                <h3>History</h3>
+                <p>We've been proudly serving the community since 2008</p>
+                <h3>Our Methods</h3>
+                <p>Our special method of garment cleaning sets us apart from others by using enviromentally friendly methods that are safer for all of us</p>
+                <h3></h3>
             </div>
         </div>
       </div>
@@ -80,4 +92,4 @@ const Info = () => {
   )
 }
 
-export default Info
+export default animation(Info)

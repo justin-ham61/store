@@ -1,3 +1,10 @@
+:root {
+  --main-radius: 10px
+}
+
+
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,7 +13,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow: overlay;
 }
+
+input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
 
 h2 {
   margin: 10px 20px;
@@ -14,12 +28,21 @@ h2 {
   font-size: 2rem;
   letter-spacing: 3px;
   cursor: default;
+  color: white;
 }
 h1 {
   margin: 10px 20px;
   font-weight: 300;
   font-size: 2.5rem;
   letter-spacing: 3px;
+  cursor: default;
+}
+
+h3 {
+  margin: 10px 20px;
+  font-weight: 300;
+  font-size: 1.5rem;
+  letter-spacing: 2px;
   cursor: default;
 }
 p{
@@ -48,6 +71,11 @@ a{
   height: 75px;
   background-color: rgba($color: #000000, $alpha: 0.5);
   transition: .2s;
+  .left-div{
+    img{
+      width: 100px;
+    }
+  }
   div {
     color: white;
     margin: 0px 100px;
@@ -71,6 +99,31 @@ a{
   }
 }
 
+.account-menu{
+  width: 200px;
+  background-color: rgba($color: #000000, $alpha: .5);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: white;
+  right: 0px;
+  top: 75px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000000;
+  .logout-btn{
+    cursor: pointer;
+  }
+  h3{
+    cursor: pointer;
+    transition: .2s;
+    &:hover{
+      text-shadow: 0px 0px 4px white;
+    }
+  }
+}
+
 .main {
   display: grid;
   grid-template-columns: 1fr;
@@ -86,15 +139,16 @@ a{
 }
 
 .info{
+  height: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   .left-info {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     div {
-      background-color: rgba($color: #000000, $alpha: 0.7);
+      background-color: rgba($color: #000000, $alpha: .7);
       border-radius: 10px;
       color: white;
     }
@@ -126,32 +180,36 @@ a{
             }
           }
       }
-      .left-main{
-        flex: 1 0 auto;
-        background-color: transparent;
+      .chevs{
         display: grid;
-        grid-template-columns: 1fr 12fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        background-color: transparent;
         .chev{
           display: flex;
           justify-content: center;
           align-items: center;
           cursor: pointer;
           transition: .2s;
+          background-color: transparent;
+          border-radius: 0px;
           &:hover{
             background-color: rgba($color: #000000, $alpha: 0.2);
           }
           &:active{
             background-color: rgba($color: #000000, $alpha: 0.7);
           }
-
+          
           svg {
-            width: 20px;
+            width: 10px;
             height: auto;
+            padding: 10px 0px;
           }
         }
-        .instructions{
-
-        }
+      }
+      .left-main{
+        flex: 1 0 auto;
+        background-color: transparent;
+        display: grid;
         div{
           background-color: transparent;
           border-radius: 0px;
@@ -161,11 +219,13 @@ a{
     .left-right{
       display: flex;
       flex-direction: column;
-      .order-status{
+      .info-about{
+        background-color: transparent;
         flex: 1 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        p{
+          margin: 10px 20px;
+          line-height: 30px;
+        }
       }
     }
   }
@@ -191,6 +251,11 @@ a{
         }
       }
     }
+    .bottom-right{
+      p{
+        margin: 10px 20px;
+      }
+    }
   }
 }
 
@@ -198,22 +263,27 @@ a{
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  top: 75px;
+  left: 0px;
   gap: 30px;
-  margin-top: -50px;
   height: 100vh;
   width: 100vw;
-  background-color: rgb(12, 12, 12);
+  background-color: #f1f1f1;
   .item-nav{
-    margin-top: 10%;
+    margin-top: 5%;
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 75px;
+    .shopping-cart{
+      margin-right: 20px;
+      cursor: pointer;
+    }
     .item-selector {
       width: 250px;
       height: 30px;
-      background-color: rgba($color: #000000, $alpha: 0.6);
       border-radius: 20px;
       display: flex;
       justify-content: center;
@@ -226,55 +296,64 @@ a{
     }
     .item-section-btn{
       background-color: transparent;
-      color: white;
+      padding: 5px;
+      color: #171717;
       border-radius: 20px;
+      border-width: 1px;
       margin: 0px 0px;
       border-style: solid;
-      border-color: white;
+      border-color: #171717;
+      transition: .2s ease-in;
       &:hover{
         cursor: pointer;
       }
+      &:active{
+        transform: scale(.95);
+      }
+    }
+    .cart-btns{
+      display: flex;
+      gap: 10px;
     }
   }
   .item-wrapper{
     width: 100vw;
     display: flex;
     justify-content: center;
-    background-color: rgb(12, 12, 12);
-    margin-bottom: 50px;
+    background-color: #F1F1F1;
+    padding-bottom: 100px;
     .items {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       width: 80%;
-      gap: 40px;
+      border-collapse: collapse;
       .item {
+        border-style: none;
+        border-bottom: solid;
+        border-color: #525252;
+        border-width: 1px;
         color: white;
-        height: 250px;
-        width: 30%;
-        border-style: solid;
-        border-color: white;
-        display: grid;
-        grid-template-rows: 3fr .5fr 1fr;
+        height: 50px;
+        width: 100%;
+        display: flex;
         align-items: center;
-        justify-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding: 0px 20px;
         .item-info{
           display: flex;
           color: black;
           width: 100%;
+          height: 100%;
           justify-content: space-between;
           align-items: center;
-          background-color: white;
-          p{
-            margin: 10px;
-          }
         }
         .item-count {
           height: 100%;
           width: 100%;
-          background-color: white;
           display: flex;
-          justify-content: center;
+          justify-content: end;
           align-items: center;
           gap: 20px;
           color: black;
@@ -301,49 +380,384 @@ a{
       }
     }
   }
+  .item-config-section{
+    width: 80%;
+    .add-item-row{
+      width: 100%;
+      height: 50px;
+      box-sizing: border-box;
+      padding: 10px;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      border-top: solid;
+      border-width: 1px;
+      border-color: #525252;
+      button{
+        width: 100px;
+        height: 30px;
+        color: white;
+        background-color: rgb(0, 193, 0);
+        border: none;
+      }
+    }
+  }
 }
 
 .login-section{
   display: flex;
   justify-content: center;
+  height: 100%;
   .login-box{
     height: 100%;
-    width: 40%;
+    width: 30%;
     background-color: rgba($color: #000000, $alpha: 0.9);
-    border-radius: 30px;
-    display: flex;
+    border-radius: 10px;
+    display: grid;
     gap: 20px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    grid-template-rows: 3fr 6fr;
+    h2 {
+      align-self: center;
+      justify-self: center;
+    }
+    .login-content{
+      justify-self: center;
+      width: 100%;
+      display: grid;
+      
+      justify-items: center;
+      form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        width: 50%;
+        input{
+          padding-left: 10px;
+        }
+        input, 
+        button,
+        .next-prev{
+          width: 100%;
+          height: 50px;
+          background-color: transparent;
+          border-style: solid;
+          border-color: white;
+          border-radius: 0px;
+          color: white;
+          font-size: 1rem;
+          font-weight: 200;
+          letter-spacing: 2px;
+          transition: .2s;
+        }
+        button:hover{
+          background-color: white;
+          color: black;
+          cursor: pointer;
+        }
+        .next-prev{
+          display: flex;
+          gap: 10px;
+          width: 105%;
+          border-style: none;
+        }
+        .input-field{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          width: 100%;
+          label{
+            color: white;
+            font-weight: 400;
+            letter-spacing: 2px;
+          }
+          p {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.contact-section {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  div {
+    background-color: rgba($color: #000000, $alpha: 0.7);
+    border-radius: var(--main-radius);
+  }
+  .contact-us-form{
+    box-sizing: border-box;
+    padding: 30px;
     form{
       display: flex;
       flex-direction: column;
       gap: 20px;
-      align-items: center;
-      width: 50%;
-      input{
-        padding-left: 10px;
-      }
-      input, 
-      button {
-        width: 70%;
-        height: 50px;
+      height: 100%;
+      input,
+      textarea {
+        width: calc(100% - 7px);
         background-color: transparent;
+        border-color: white;
+        border-style: solid;
+        border-width: 2px;
+      }
+      input {
+        height: 40px;
+      }
+      textarea{
+        flex: 1 0 auto;
+        resize: none;
+      }
+      label{
+        color: white;
+        font-weight: 400;
+        letter-spacing: 2px;
+        margin-bottom: -10px;
+      }
+      button{
+        height: 50px;
         border-style: solid;
         border-color: white;
-        border-radius: 0px;
+        background-color: transparent;
         color: white;
-        font-size: 1rem;
-        font-weight: 200;
-        letter-spacing: 2px;
-        transition: .2s;
-      }
-      button:hover{
-        background-color: white;
-        color: black;
+        transition: .2s ease-in;
         cursor: pointer;
+        &:hover{
+          color: black;
+          background-color: white;
+        }
+      }
+      h2{
+        margin: 0px;
       }
     }
   }
+}
+
+.express-section{
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  border-radius: var(--main-radius);
+  height: 100%;
+}
+
+.account-section {
+  background-color: rgba($color: #000000, $alpha: .7);
+  height: 100%;
+  width: 50%;
+  border-radius: 10px;
+  margin-right: auto;
+  margin-left: auto;
+  box-sizing: border-box;
+  padding: 10px;
+  h2{
+    margin: 0px;
+  }
+}
+
+.order-section {
+  background-color: rgba($color: #000000, $alpha: .7);
+  height: 100%;
+  width: 100%;
+}
+
+.admin-section{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  box-sizing: border-box;
+  padding: 75px;
+}
+
+::-webkit-scrollbar {
+  background: #000;
+}
+
+#active {
+  background-color: black;
+  color: white;
+  transition: .2s;
+  transform: scale(1.05);
+}
+
+.cart-section{
+  background-color: rgba($color: #000000, $alpha: .7);
+  height: 100%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-rows: 1fr 6fr 1fr 1fr;
+  box-sizing: border-box;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  .table-container{
+    width: 100%;
+    height: 400px;
+    overflow-y: auto;
+    color:white;
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      overflow-y: auto;
+      td, th{
+        padding: 15px 0px;
+      }
+      .align-right{
+        text-align: right;
+        padding-right: 30px;
+      }
+      .total{
+        font-weight: bold;
+      }
+      .bold{
+        font-weight: bold;
+      }
+    }
+  }
+  p{
+    color: white;
+    font-weight: 300;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  button{
+    width: 40%;
+    justify-self: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    background-color: transparent;
+    color: white;
+    font-size: 1.25rem;
+    transition: .2s ease-in;
+    cursor: pointer;
+    &:hover{
+      background-color: rgb(235, 235, 235);
+      color: black;
+    }
+    &:active{
+      transform: scale(.95);
+    }
+  }
+}
+
+.checkout-section{
+  width: 50%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: .7);
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: 1fr 4fr .5fr .5fr;
+  gap: 20px;
+  p{
+    color: white;
+    margin: 0px;
+  }
+  h2 {
+    margin: 10px 0px;
+  }
+  .customer-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p{
+      font-size: 24px;
+    }
+  }
+  .customer-edit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    p{
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .button-section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    button{
+      width: 50%;
+      justify-self: center;
+      border-style: solid;
+      border-width: 1px;
+      border-color: white;
+      background-color: transparent;
+      color: white;
+      font-size: 1.25rem;
+      transition: .2s ease-in;
+      cursor: pointer;
+      &:hover{
+        background-color: rgb(235, 235, 235);
+        color: black;
+      }
+      &:active{
+        transform: scale(.95);
+      }
+    }
+  }
+}
+
+.prices-section{
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 30px;
+  .category{
+    border-style: none;
+    border-radius: 5px;
+    background-color: rgba($color: #000000, $alpha: .7);
+    box-shadow: 1px 1px 2px black;
+    box-sizing: border-box;
+    padding: 10px;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    h2{
+      margin: 0px;
+    }
+    table{
+      display: flex;
+      flex-direction: column;
+      tr{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: solid;
+        border-color: rgb(94, 94, 94);
+        border-collapse: collapse;
+        border-width: 1px;
+        td{
+          height: 20px;
+          color: white;
+          padding: 5px 0px;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}
+
+#add{
+  color: rgb(0, 242, 0);
+}
+#subtract{
+  color: rgb(255, 140, 140);
 }
