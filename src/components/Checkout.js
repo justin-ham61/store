@@ -3,10 +3,13 @@ import { animation } from './hoc'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import CheckoutConfirm from './CheckoutConfirm';
+import { AnimatePresence } from 'framer-motion';
 
 
 const Checkout = () => {
     const [user, setUser] = useState({});
+    const [showOrderConfirmation, toggleShowOrderConfirmation] = useState(false)
 
     let navigate = useNavigate();
 
@@ -33,8 +36,16 @@ const Checkout = () => {
         navigate('/Cart')
     }
 
+
         return (
     <div className='checkout-section'>
+        <AnimatePresence mode="wait">
+            {showOrderConfirmation ? 
+                <CheckoutConfirm onClick={toggleShowOrderConfirmation}/>
+                :
+                null
+            }
+        </AnimatePresence>
         <div>
             <h2>Hey, {user.first_name}!</h2>
             <p>Please review the following information to ensure the best experience</p>
@@ -53,9 +64,8 @@ const Checkout = () => {
         </div>
         <div className='button-section'>
             <button onClick={goToCart}>Go Back to Cart</button>
-            <button>Place Order</button>
+            <button onClick={() => toggleShowOrderConfirmation(true)}>Place Order</button>
         </div>
-
     </div>
   )
 }

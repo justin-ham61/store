@@ -1,21 +1,44 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { animation } from './hoc'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 const Info = () => {
-  
+    let navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const state = params.get('state')
+
+    useEffect(() => {
+        if (state === 'verified'){
+            navigate('/Login', {state:{message: 'verified'}})
+        }
+        if (state === 'notverified'){
+            navigate('/Login', {state:{message: 'notverified'}})
+        }
+    },[location])
+
     const [orderType, toggleOrderType] = useState('Express');
     const orderTypeArray = [
         'Express',
         'Custom'
     ]
 
+    const cart = {
+        Express: '1'
+    }
+
     const Items = () => {
-        console.log('go to items')
+        navigate('/Items')
+    }
+
+    const createExpressCart = () => {
+        Cookies.set('cart', JSON.stringify(cart), { expires: 7 });
+        navigate('/Cart')
     }
 
   return (
@@ -27,23 +50,36 @@ const Info = () => {
             <div className='left-main'>
                 <div className='instructions'>
                     <h3>{orderType}</h3>
-
                     {orderType == "Express" ? 
                     <div>
                         <ol>
                             <li><p>Gather all items to be laundered</p></li>
-                            <li><p>Place in bag</p></li>
-                            <li><p>Schedule Pick up date mon-fri after 6pm</p></li>
-                            <li><p>Trust us to figure out what has to be done for each of the items</p></li>
+                            <li><p>No need to figure out garment categories or count</p></li>
+                            <li><p>Click the "Express Order" button below</p></li>
+                            <li><p>This will automatically add an "Express" item to your cart</p></li>
+                            <li><p>Review personal information</p></li>
+                            <li><p>Place Order</p></li>
+                            <li><p>Await email regarging pick up instructions</p></li>
+                            <li><p>We will categorize all garments and notify you of our count!</p></li>
                         </ol>
+                        <div className='notice'>
+                            <p>*As we do not have an online payment portal, Payment will be taken in-person after the garment has been delivered</p>
+                        </div>
                     </div> : 
                     <div>
                         <ol>
                             <li><p>Gather your garments</p></li>
-                            <li><p>Get a count of each item</p></li>
-                            <li><p>Proceed to the product page</p></li>
-                            <li><p>Add to your shopping card the correct number of items</p></li>
+                            <li><p>Separate items into categories using our PRICES page as reference</p></li>
+                            <li><p>Proceed to CONFIGURATOR tab</p></li>
+                            <li><p>Configure your order and click "Add to Cart"</p></li>
+                            <li><p>Proceed to cart</p></li>
+                            <li><p>Review cart items and personal information</p></li>
+                            <li><p>Place Order</p></li>
+                            <li><p>Await email regarding pick up instructions</p></li>
                         </ol>
+                        <div className='notice'>
+                            <p>*As we do not have an online payment portal, Payment will be taken in-person after the garment has been delivered</p>
+                        </div>
                     </div> 
                     }
 
@@ -55,7 +91,7 @@ const Info = () => {
             </div>
             <div className='left-btns'>
                 <button onClick={Items}>Customize Order</button>
-                <button><Link to="/Express">Express Order</Link></button>
+                <button onClick={createExpressCart}>Express Order</button>
             </div>
         </div>
         <div className='left-right'>

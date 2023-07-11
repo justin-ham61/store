@@ -12,6 +12,8 @@ const Cart = () => {
     const [keys, setKeys] = useState([]);
     const [ pricing, setPricing ] = useState({})
     const [ cartTotal, setCartTotal ] = useState(0)
+    const [ deliveryFee, setDeliveryFee ] = useState(0)
+    
     const getItems = async () => {
         axios.get('/Admin/GetItems')
         .then(response => {
@@ -82,6 +84,9 @@ const Cart = () => {
             totalAmount += (pricing[key] * cart[key]);
         })
         parseInt(totalAmount)
+        if(totalAmount < 50){
+            setDeliveryFee(5)
+        }
         totalAmount.toFixed(2)
         setCartTotal(totalAmount);
       },[pricing])
@@ -93,24 +98,37 @@ const Cart = () => {
             <table className='cart-table'>
                 <tr>
                     <th style={{width: 10}}>Item</th>
-                    <th style={{width: 70}}>Quantity</th>
-                    <th style={{width: 20}} className='align-right'>Price</th>
+                    <th style={{width: 10}}>Item Price</th>
+                    <th style={{width: 40}}>Quantity</th>
+                    <th style={{width: 40}} className='align-right'>Total Price</th>
                 </tr>
                 {keys.map((key, i) => {
                     if(cart[key] > 0) {
                         return(
                             <tr>
                                 <td>{key}</td>
+                                <td>${pricing[key]}</td>
                                 <td>x{cart[key]}</td>
                                 <td className='align-right'>${(pricing[key] * cart[key]).toFixed(2)}</td>
                             </tr>
                         )
                     }
                 })}
+                {cartTotal < 50 ? 
+                    <tr>
+                        <td>Delivery Fee</td>
+                        <td></td>
+                        <td></td>
+                        <td className='align-right'>$5.00</td>
+                    </tr>
+                    :
+                    null
+                }
                 <tr>
                     <td className='bold'>Total</td>
                     <td></td>
-                    <td className='align-right total'>${(cartTotal).toFixed(2)}</td>
+                    <td></td>
+                    <td className='align-right total'>${(cartTotal + deliveryFee).toFixed(2)}</td>
                 </tr>
             </table>
         </div>

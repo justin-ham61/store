@@ -10,7 +10,7 @@ import logo from './images/logo.png'
 const Navbar = () => {
   let navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({isAdmin: 0});
   const [isAdmin, setIsAdmin] = useState(false)
 
   //API call to retrieve user sign in ---------------------------------

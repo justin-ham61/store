@@ -9,34 +9,57 @@ import Cookies from "js-cookie";
 
 const Items = () => {
     let navigate = useNavigate();
-    const [ listItemsDry, setListItemsDry ] = useState([]);
-    const [ listItemsLaundry, setListItemsLaundry ] = useState([]);
+    const [ listItems, setListItems ] = useState([]);
 
     //0 = dry, 1 = laundry, 2 = other
-    const [ category, setCategory ] = useState(listItemsDry);
+    const [ category, setCategory ] = useState({});
     const [ itemSelection, setItemSelection ] = useState({});
     const [ cart, setCart ] = useState({});
     const [ cartLength, setCartLength ] = useState(0);
-    const [ addedItems, setAddedItems ] = useState([]);
-    const [ showItemOptions, toggleItemOptions ] = useState(false);
+
+
+    const categorizeItems = (items) => {
+        let categories = {
+            'Tops': [],
+            'Bottoms': [],
+            'Fullbody': [],
+            'Accessories': [],
+            'Households': [],
+            'Others': []
+        }
+
+        listItems.map((item) => {
+            if (item.category === 'Tops'){
+                categories.Tops.push(item)
+            } else if (item.category === 'Bottoms'){
+                categories.Bottoms.push(item)
+            } else if (item.category === 'Full Body'){
+                categories.Fullbody.push(item)
+            } else if (item.category === 'Accessories'){
+                categories.Accessories.push(item)
+            } else if (item.category === 'Households'){
+                categories.Households.push(item)
+            } else if (item.category === 'Others'){
+                categories.Others.push(item)
+            }
+        })
+        return categories
+    }
+
 
     useEffect(() => {
-        setListItemsDry([])
-        setListItemsLaundry([])
+        setListItems([])
         getItems();
     },[])
 
     useEffect(() => {
-        setCategory(listItemsDry)
-    },[listItemsDry])
+        const categorizedItems = categorizeItems(listItems);
+        setCategory(categorizedItems)
+        console.log(category)
+    }, [listItems])
     
     const toggleCategory = (x) => {
         console.log("clicked" + x);
-        if (x === 'dry'){
-            setCategory(listItemsDry)
-        } else if (x === 'laundry'){
-            setCategory(listItemsLaundry)
-        }
     }
 
     const getItems = async () => {
@@ -44,11 +67,7 @@ const Items = () => {
         .then(response => {
             let results = response.data.results;
             results.map((item) => {
-                if (item.item_category === "dry"){
-                    setListItemsDry(oldArray => [...oldArray, item])
-                } else if (item.item_category === "laundry"){
-                    setListItemsLaundry(oldArray => [...oldArray, item])
-                }
+                setListItems(oldArray => [...oldArray, item])
             })
         })
     }
@@ -110,10 +129,6 @@ const Items = () => {
 
     <div className='items-section'>
         <div className='item-nav'>
-            <div className='item-selector'>
-                <button className='item-section-btn' onClick={(e) => toggleCategory('dry')} id={category === listItemsDry ? 'active' : ''}>Dry Cleaning</button>
-                <button className='item-section-btn' onClick={(e) => toggleCategory('laundry')} id={category === listItemsLaundry ? 'active' : ''}>Laundry</button>
-            </div>
             <div className='cart-btns'>
                 <span className='shopping-cart'>
                     {cartLength > 0 ? 
@@ -132,17 +147,25 @@ const Items = () => {
         </div>
         <div className='item-wrapper'>
             <div className='items'>
-                {category.map((item) => {
+                {Object.entries(category).map(([i, x]) => {
                     return (
-                    <div className='item' key={item.item_id}>
-                        <div className='item-info'>
-                            <p>{item.item_name} - ${item.item_price}</p>
-                        </div>
-                        <div className='item-count'>
-                            <FontAwesomeIcon icon={faCircleMinus} className={item.item_name} onClick={() => handleItemRemove(item.item_name)} id='subtract'/>
-                            <input key={item.item_id} name={item.item_name} type="number" value={itemSelection[item.item_name]} onChange={handleChange} placeholder='0' onWheel={(e) => e.target.blur()}/>
-                            <FontAwesomeIcon icon={faCirclePlus} className={item.item_name} onClick={() => handleItemAdd(item.item_name)} id='add'/>
-                        </div>
+                    <div key={i} className='item-category-box'>
+                        <h2 className='category-header'>{i.toUpperCase()}</h2>
+                        {x.map((item, index) => {
+                            return(
+
+                                <div className='item' key={item.item_id}>
+                                <div className='item-info'>
+                                    <p className='.prevent-select'>{item.item_name} - ${item.item_price}</p>
+                                </div>
+                                <div className='item-count'>
+                                    <FontAwesomeIcon icon={faCircleMinus} className={item.item_name} onClick={() => handleItemRemove(item.item_name)} id='subtract'/>
+                                    <input key={item.item_id} name={item.item_name} type="number" value={itemSelection[item.item_name]} onChange={handleChange} placeholder='0' onWheel={(e) => e.target.blur()}/>
+                                    <FontAwesomeIcon icon={faCirclePlus} className={item.item_name} onClick={() => handleItemAdd(item.item_name)} id='add'/>
+                                </div>
+                            </div> 
+                                )
+                        })}
                     </div>
                     )
                 })}

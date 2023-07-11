@@ -13,6 +13,8 @@ import Admin from './Admin';
 import Cart from './Cart';
 import Checkout from './Checkout';
 import Prices from './Prices';
+import Confirmation from './Confirmation';
+import RegisterV2 from './RegisterV2';
 
 const MainContent = () => {
   return (
@@ -22,7 +24,7 @@ const MainContent = () => {
             <Route path="/Items" element={<Items/>}/>
             <Route path="/Login" element={<Login/>}/>
             <Route path="/Contact" element={<Contact/>}/>
-            <Route path="/Register" element={<Register/>}/>
+            <Route path="/Register" element={<RegisterV2/>}/>
             <Route path="/Express" element={<Express/>}/>
             <Route path="/Account" element={<Account/>}/>
             <Route path="/Order" element={<Order/>}/>
@@ -30,6 +32,7 @@ const MainContent = () => {
             <Route path="/Cart" element={<Cart/>}/>
             <Route path="/Checkout" element={<Checkout/>}/>
             <Route path="/Prices" element={<Prices/>}/>
+            <Route path="/Confirmation" element={<Confirmation/>}/>
         </Routes>
       </AnimatePresence>
   )
