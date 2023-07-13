@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleMinus, faCirclePlus, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCircleMinus, faCirclePlus, faCartShopping, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { animation } from './hoc'
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
@@ -16,6 +16,7 @@ const Items = () => {
     const [ itemSelection, setItemSelection ] = useState({});
     const [ cart, setCart ] = useState({});
     const [ cartLength, setCartLength ] = useState(0);
+    const [ takeToCart, setTakeToCart] = useState(false)
 
 
     const categorizeItems = (items) => {
@@ -98,14 +99,25 @@ const Items = () => {
 
     const submitToCart = () => {
         setCart(itemSelection);
-        alert('Items Added to Cart')
+        if(window.confirm('Items successfully added to cart \nWould you like to proceed to checkout?')){
+            setTakeToCart(true)
+        } else {
+            return;
+        }
     }
+
+    useEffect(() => {
+        if(takeToCart === true){
+            navigate('/Cart')
+        }
+    },[takeToCart])
 
     const clearCart = () => {
         setCart({})
         alert('Cleared Cart')
-        window.location.reload();
-
+        setItemSelection({})
+        setListItems([]);
+        getItems();
     }
 
     useEffect(() => {
@@ -129,21 +141,22 @@ const Items = () => {
 
     <div className='items-section'>
         <div className='item-nav'>
-            <div className='cart-btns'>
-                <span className='shopping-cart'>
+                <div className='item-section-btn-container'>
+                    <button className='item-section-btn' type='button' onClick={submitToCart}>{cartLength === 0 ? 'Add Selection to Cart' : 'Update Cart'}</button>
+                    {cartLength > 0 ? 
+                    <button id='red' className='item-section-btn' type='button' onClick={clearCart}>Clear Cart</button>
+                    :
+                    null
+                    }
+                </div>
+                <div className='shopping-cart pointer-cursor' onClick={navigateToCart}>
                     {cartLength > 0 ? 
                     <FontAwesomeIcon icon={faCartShopping} beat size="xl" onClick={navigateToCart} className='pointer-cursor'/>
                     :
-                    <FontAwesomeIcon icon={faCartShopping} size="xl"/>
+                    <FontAwesomeIcon icon={faCartShopping} size="xl" onClick={navigateToCart} className='pointer-cursor'/>
                     }
-                </span>
-                <button className='item-section-btn' type='button' onClick={submitToCart}>{cartLength === 0 ? 'Add Items to Cart' : 'Update Cart'}</button>
-                {cartLength > 0 ? 
-                <button className='item-section-btn' type='button' onClick={clearCart}>Clear Cart</button>
-                :
-                null
-                }
-            </div>
+                    <p>Cart</p>
+                </div>
         </div>
         <div className='item-wrapper'>
             <div className='items'>

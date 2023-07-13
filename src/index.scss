@@ -353,40 +353,44 @@ a{
   width: 100vw;
   background-color: $background;
   .item-nav{
-    margin-top: 5%;
+    margin-top: 3%;
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 75px;
     .shopping-cart{
       margin-right: 20px;
       cursor: pointer;
-    }
-    .item-selector {
-      width: 250px;
-      height: 30px;
-      border-radius: 20px;
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 10px;
-      button {
-        width: 45%;
-        height: 85%;
+      gap: 5px;
+      svg{
+        height: 30px;
+      }
+    }
+    .item-section-btn-container{
+      display: flex;
+      gap: 15px;
+      #red{
+        background-color: red;
+        &:hover{
+          background-color: white;
+          color: red;
+        }
       }
     }
     .item-section-btn{
-      background-color: transparent;
-      padding: 5px;
-      color: #171717;
-      border-radius: 20px;
+      background-color: $dark-accent;
+      padding: 15px;
+      color: white;
+      border-radius: 10px;
       border-width: 1px;
       margin: 0px 0px;
-      border-style: solid;
-      border-color: #171717;
+      border-style: none;
       transition: .2s ease-in;
       &:hover{
+        background-color: white;
+        color: $dark-accent;
         cursor: pointer;
       }
       &:active{
