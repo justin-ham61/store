@@ -6,7 +6,7 @@ phases:
         nodejs: 12
     commands:
       - echo Installing source NPM dependencies...
-      - npm install
+      - cd backend && npm install
   build:
     commands:
       - echo Build started on `date`
@@ -16,4 +16,5 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: build
+  base-directory: 'backend/build' # or adjust this according to your directory structure
+
