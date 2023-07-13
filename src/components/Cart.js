@@ -131,9 +131,15 @@ const Cart = () => {
                     <td className='align-right total'>${(cartTotal + deliveryFee).toFixed(2)}</td>
                 </tr>
             </table>
+            {cartTotal < 50 ? 
+            <p>*A $5 Delivery Fee is added to orders below $50</p>
+            :
+            null
+            }
+            <p>*Total cost is an estimate, a surcharge may get added for certain garments that require extra handling. We will properly communicate any changes before proceeding with service!</p>
         </div>
         <div>
-            <p onClick={navigateToCart}>Return to order configurator to edit items</p>
+            <p onClick={navigateToCart} className='link'>Return to order configurator to edit items</p>
         </div>
         <button onClick={handleSubmit}>Review Address</button>
     </div>

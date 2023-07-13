@@ -154,7 +154,7 @@ const Items = () => {
                         {x.map((item, index) => {
                             return(
 
-                                <div className='item' key={item.item_id}>
+                            <div className='item' key={item.item_id}>
                                 <div className='item-info'>
                                     <p className='.prevent-select'>{item.item_name} - ${item.item_price}</p>
                                 </div>

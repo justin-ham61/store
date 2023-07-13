@@ -5,13 +5,15 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 import {AuthContext} from './AuthContext';
 import logo from './images/logo.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 
-const Navbar = () => {
+const Navbar = ({menu, handleKeyDown, handleClick}) => {
   let navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
   const [userInfo, setUserInfo] = useState({isAdmin: 0});
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [ mobileMenu, toggleMobileMenu ] = useState(false)
 
   //API call to retrieve user sign in ---------------------------------
   useEffect(() => {
@@ -27,6 +29,11 @@ const Navbar = () => {
 
   const value = useContext(AuthContext)
   const [accountMenu, toggleAccountMenu] = useState(false);
+
+  useEffect(() => {
+    toggleAccountMenu(false)
+  },[menu])
+
   const navVariant = {
       initial: {
         translateX: 50,
@@ -55,6 +62,7 @@ const Navbar = () => {
         setUserInfo(null);
         navigate('/')
         console.log(response.data);
+        toggleAccountMenu(false);
       })
       .catch(error => {
         console.error('error', error);
@@ -73,16 +81,47 @@ const Navbar = () => {
     toggleAccountMenu(false);
     navigate('/Cart');
   }
+  const goTo = (location) => {
+    navigate(`/${location}`)
+    toggleMobileMenu(false)
+  }
 
   return (
-    <div className="navbar">
+    <div className="navbar" onKeyDown={handleKeyDown} tabIndex={0} onClick={handleClick}>
+      <AnimatePresence mode='wait'>
+        {mobileMenu ? 
+         <motion.div className='mobile-menu'>
+            <nav>
+              <ul>
+                  <li onClick={() => goTo('Prices')}>Prices</li>
+                  <li onClick={() => goTo('Items')}>Configurator</li>
+                  <li onClick={() => goTo('Contact')}>Contact</li>
+                  {authenticated && userInfo.isAdmin === 1 ? 
+                    <li>Admin</li>
+                  : 
+                    null
+                  }
+                  {authenticated ? 
+                  <li onClick={() => toggleAccountMenu(!accountMenu)}>Account</li>
+                  :
+                  <li onClick={() => goTo('Login')}>Sign In</li>
+                  }
+              </ul>
+            </nav>
+         </motion.div>
+         :
+         null
+        }
+      </AnimatePresence>
         <div className="left-div">
             <Link to="/"><img src={logo} alt="Casa De Cleaners"/></Link>
         </div>
         <div className="right-div">
+          <div className='mobile-nav-button'>
+            <FontAwesomeIcon icon={faBars} onClick={() => {toggleMobileMenu(!mobileMenu)}} />
+          </div>
           <nav>
             <ul>
-                <li>About</li>
                 <li><Link to="/Prices">Prices</Link></li>
                 <li><Link to="/Items">Configurator</Link></li>
                 <li><Link to="/Contact">Contact</Link></li>
@@ -91,7 +130,11 @@ const Navbar = () => {
                 : 
                   null
                 }
+                {authenticated ? 
                 <li onClick={() => toggleAccountMenu(!accountMenu)}>Account</li>
+                :
+                <li><Link to="/Login">Sign In</Link></li>
+                }
             </ul>
           </nav>
         </div>

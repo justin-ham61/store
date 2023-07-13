@@ -41,6 +41,12 @@ const Info = () => {
         navigate('/Cart')
     }
 
+    const navigateToPrices = () => {
+        navigate('/Prices')
+    }
+    const navigateToConfig = () => {
+        navigate('/Items')
+    }
   return (
     
     <div className='info'>
@@ -49,7 +55,11 @@ const Info = () => {
             <h2>How - To</h2>
             <div className='left-main'>
                 <div className='instructions'>
-                    <h3>{orderType}</h3>
+                    <div className='chevs'>
+                        <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft} beat/></div>
+                        <h3 className='bold'>{orderType}</h3>
+                        <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronRight} beat/></div>
+                    </div>
                     {orderType == "Express" ? 
                     <div>
                         <ol>
@@ -69,8 +79,8 @@ const Info = () => {
                     <div>
                         <ol>
                             <li><p>Gather your garments</p></li>
-                            <li><p>Separate items into categories using our PRICES page as reference</p></li>
-                            <li><p>Proceed to CONFIGURATOR tab</p></li>
+                            <li><p>Separate items into categories using our <span className='link' onClick={navigateToPrices}>PRICES</span> page as reference</p></li>
+                            <li><p>Proceed to <span className='link' onClick={navigateToConfig}>CONFIGURATOR</span> tab</p></li>
                             <li><p>Configure your order and click "Add to Cart"</p></li>
                             <li><p>Proceed to cart</p></li>
                             <li><p>Review cart items and personal information</p></li>
@@ -84,10 +94,6 @@ const Info = () => {
                     }
 
                 </div>
-            </div>
-            <div className='chevs'>
-                <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft}/></div>
-                <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronRight}/></div>
             </div>
             <div className='left-btns'>
                 <button onClick={Items}>Customize Order</button>

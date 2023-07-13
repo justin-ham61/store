@@ -1,9 +1,8 @@
-:root {
-  --main-radius: 10px
-}
-
-
-
+$background: #f2ecdb;
+$navy: #3c326b;
+$red: #a21f37;
+$dark-accent: #9495b3;
+$light-accent: #ac9aca;
 
 body {
   margin: 0;
@@ -14,6 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   overflow: overlay;
+  background-color: $background;
 }
 
 input::-webkit-outer-spin-button,
@@ -28,7 +28,7 @@ h2 {
   font-size: 2rem;
   letter-spacing: 3px;
   cursor: default;
-  color: white;
+  color: black;
 }
 h1 {
   margin: 10px 20px;
@@ -46,7 +46,7 @@ h3 {
   cursor: default;
 }
 p{
-  font-weight: 200;
+  font-weight: 350;
   letter-spacing: 1px;
   margin: 5px;
 }
@@ -56,20 +56,46 @@ a{
 }
 
 .section {
+  @media screen and (max-width: 900px){
+    min-height: 100vh;
+    min-width: 100vw - 30
+  }
   min-height: 850px;
   min-width: 100vw;
-  background-image: url('./components/images/suits.jpeg');
-  background-size: cover;
+  background-image: url('./components/images/dryclean.jpeg');
+  @media screen and (max-width: 900px){
+    background: $background;
+  }
+  .overlay{
+    position: absolute;
+    z-index: 0;
+    top: 0px;
+    left: 0px;
+    min-height: 850px;
+    width: 100%;
+    background: rgb(242,236,219);
+    background: linear-gradient(351deg, rgba(242,236,219,.75) 83%, rgba(60,50,107,1) 83%, rgba(60,50,107,1) 87%, rgba(162,31,55,1) 87%);
+  }
 }
 
+
 .navbar{
+  @media screen and (max-width: 900px){
+    padding: 0px 30px;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+  }
   display: flex;
+  box-sizing: border-box;
+  padding: 0px 100px;
   justify-content: space-between;
   position: absolute;
   align-items: center;
   width: 100%;
   height: 75px;
-  background-color: rgba($color: #000000, $alpha: 0.5);
+  background-color: $dark-accent;
+  z-index: 2;
   transition: .2s;
   .left-div{
     img{
@@ -78,12 +104,14 @@ a{
   }
   div {
     color: white;
-    margin: 0px 100px;
     letter-spacing: 3px;
     font-weight: 300;
   }
   .right-div{
     ul{
+      @media screen and (max-width: 900px){
+        display: none;
+      }
       display: flex;
       gap: 20px;
       list-style: none;
@@ -96,12 +124,49 @@ a{
         }
       }
     }
+    .mobile-nav-button{
+      display: none;
+      svg{
+        height: 30px;
+        transition: .2s;
+        &:active{
+          transform: scale(.95);
+        }
+      }
+      @media screen and (max-width: 900px){
+        display: block;
+      }
+    }
+  }
+  .mobile-menu{
+    position: absolute;
+    width: 100%;
+    top: 75px;
+    left: 0px;
+    margin: 0px;
+    background-color: $light-accent;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    ul{
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+      list-style: none;
+      padding: 0px;
+      li{
+        height: 50px;
+        margin: 0px;
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 }
 
 .account-menu{
+  z-index: 4;
   width: 200px;
-  background-color: rgba($color: #000000, $alpha: .5);
+  background-color: $dark-accent;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   color: white;
@@ -131,26 +196,40 @@ a{
 }
 
 .sub-section{
+  @media screen and (max-width: 900px){
+    margin: 0px;
+    width: 90%;
+    align-self: baseline;
+    margin-top: 150px;
+  }
   width: 85%;
   height: 70%;
   margin-top: 5%;
   justify-self: center;
   align-self: center;
+  z-index: 1;
 }
 
 .info{
+  @media screen and (max-width: 900px){
+    display: flex;
+    flex-direction: column;
+  }
   height: 100%;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   .left-info {
+    @media screen and (max-width: 900px){
+      display: flex;
+      flex-direction: column;
+    }
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     div {
-      background-color: rgba($color: #000000, $alpha: .7);
       border-radius: 10px;
-      color: white;
+      color: black;
     }
     .left-left{
       display: flex;
@@ -166,24 +245,25 @@ a{
             margin: 20px auto;
             border-radius: 0px;
             background-color: transparent;
-            border-color: white;
+            border-color: black;
             border-width: 1px;
             border-style: solid;
-            color: white;
+            color: black;
             font-weight: 200;
             letter-spacing: 2px;
             transition: ease-in .2s;
             cursor: pointer;
             &:hover {
-              background-color: white;
-              color: black;
+              background-color: #9495b3;
+              color: white;
             }
           }
       }
       .chevs{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 3fr 1fr;
         background-color: transparent;
+        text-align: center;
         .chev{
           display: flex;
           justify-content: center;
@@ -237,8 +317,7 @@ a{
     grid-template-rows: 1fr 1fr;
     gap: 20px;
     div{
-      color: white;
-      background-color: rgba($color: #000000, $alpha: 0.7);
+      color: black;
       border-radius: 10px;
     }
     .top-right{
@@ -272,7 +351,7 @@ a{
   gap: 30px;
   height: 100vh;
   width: 100vw;
-  background-color: #f1f1f1;
+  background-color: $background;
   .item-nav{
     margin-top: 5%;
     width: 80%;
@@ -323,22 +402,27 @@ a{
     width: 100vw;
     display: flex;
     justify-content: center;
-    background-color: #F1F1F1;
+    background-color: $background;
     padding-bottom: 100px;
     .items {
+      @media screen and (max-width: 900px){
+        width: 95%;
+      }
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
       width: 80%;
       border-collapse: collapse;
       .item-category-box{
+        @media screen and (max-width: 900px){
+          width: 100%;
+        }
         h2{
           color: #171717;
         }
         width: 45%;
         margin-bottom: 20px;
         .item {
-          border-style: none;
           border-bottom: solid;
           border-color: #3e3e3e;
           border-width: 1px;
@@ -358,6 +442,9 @@ a{
             justify-content: space-between;
             align-items: center;
             p{
+              @media screen and (max-width: 900px) {
+                font-size: .8rem;
+              }
               font-size: 1rem;
             }
           }
@@ -418,11 +505,13 @@ a{
 }
 
 .register-section{
+  @media screen and (max-width: 900px){
+    width: 90%;
+  }
   display: flex;
   justify-content: center;
-  height: 100%;
   width: 50%;
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -434,6 +523,13 @@ a{
   h2 {
     align-self: center;
     justify-self: center;
+    color: white;
+  }
+  .desktop-regis{
+    @media screen and (max-width: 900px){
+      display: flex;
+      flex-direction: column;
+    }
   }
   .input-section{
     display: flex;
@@ -447,6 +543,12 @@ a{
     }
   }
       form{
+        @media screen and (max-width: 900px){
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
         display: grid;
         grid-template-rows: 7fr 1fr;
         gap: 5px;
@@ -456,6 +558,10 @@ a{
           grid-template-columns: 1fr 1fr;
         }
         button{
+          @media screen and (max-width: 900px){
+            margin-left: auto;
+            margin-right: auto;
+          }
           justify-self: center;
           padding: 5px;
         }
@@ -510,17 +616,59 @@ a{
 }
 
 .contact-section {
+  @media screen and (max-width: 900px){
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+  }
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   div {
-    background-color: rgba($color: #000000, $alpha: 0.7);
-    border-radius: var(--main-radius);
+    background-color: $dark-accent;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  h2{
+    margin: 0px;
+    color: white;
+  }
+  p{
+    color: white;
+    margin: 0px;
+  }
+  h3{
+    @media screen and (max-width: 900px){
+      font-size: .9rem;
+    }
+    color: white;
+    font-size: 20px;
+    margin: 0px;
+  }
+  .contact-information{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    ul{
+      list-style: none;
+      margin: -10px 0px;
+      padding: 0px;
+      .hours-day{
+        display: flex;
+        justify-content: space-between;
+        background-color: transparent;
+        padding: 10px 0px;
+        p{
+          margin: 0px;
+        }
+      }
+    }
   }
   .contact-us-form{
-    box-sizing: border-box;
-    padding: 30px;
     form{
       display: flex;
       flex-direction: column;
@@ -532,7 +680,10 @@ a{
         background-color: transparent;
         border-color: white;
         border-style: solid;
-        border-width: 2px;
+        border-width: 1px;
+        color: white;
+        box-sizing: border-box;
+        padding: 5px;
       }
       input {
         height: 40px;
@@ -550,6 +701,7 @@ a{
       button{
         height: 50px;
         border-style: solid;
+        border-width: 1px;
         border-color: white;
         background-color: transparent;
         color: white;
@@ -574,7 +726,7 @@ a{
 }
 
 .account-section {
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   height: 100%;
   width: 50%;
   border-radius: 10px;
@@ -592,6 +744,7 @@ a{
   }
   h2{
     margin: 0px;
+    color: white;
   }
   h3{
     margin: 0px;
@@ -603,13 +756,14 @@ a{
 }
 
 .order-section {
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   width: 100%;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 10px;
   h2{
     margin: 0px;
+    color: white;
   }
   .table-wrapper{
     height: 500px;
@@ -624,7 +778,7 @@ a{
         transition: .1s;
         cursor: pointer;
         &:hover{
-          background-color: rgba($color: #afafaf, $alpha: .5);
+          background-color: $light-accent;
         }
       }
       th{
@@ -634,7 +788,7 @@ a{
       td{
         font-weight: 200;
         border-bottom: solid;
-        border-color: rgb(157, 157, 157);
+        border-color: $light-accent
       }
       .align-right{
         text-align: right;
@@ -645,6 +799,7 @@ a{
 }
 
 .admin-section{
+  z-index: 1;
   width: 100%;
   height: 100%;
   background-color: white;
@@ -662,7 +817,10 @@ a{
 }
 
 .cart-section{
-  background-color: rgba($color: #000000, $alpha: .7);
+  @media screen and (max-width: 900px){
+    width: 95%;
+  }
+  background-color: $dark-accent;
   height: 100%;
   width: 50%;
   margin-left: auto;
@@ -673,6 +831,9 @@ a{
   padding: 10px;
   border-radius: 10px;
   text-align: center;
+  h2{
+    color: white;
+  }
   .table-container{
     width: 100%;
     height: 400px;
@@ -683,6 +844,10 @@ a{
       border-collapse: collapse;
       text-align: left;
       overflow-y: auto;
+      tr{
+        border-bottom: solid;
+        border-color: $light-accent;
+      }
       td, th{
         padding: 15px 0px;
       }
@@ -701,10 +866,11 @@ a{
   p{
     color: white;
     font-weight: 300;
-    text-decoration: underline;
-    cursor: pointer;
   }
   button{
+    @media screen and (max-width: 900px){
+      width: 80%;
+    }
     width: 40%;
     justify-self: center;
     border-style: solid;
@@ -726,9 +892,12 @@ a{
 }
 
 .checkout-section{
+  @media screen and (max-width: 900px){
+    width: 95%;
+  }
   width: 50%;
   height: 100%;
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -742,7 +911,11 @@ a{
     margin: 0px;
   }
   h2 {
+    @media screen and (max-width: 900px){
+      font-size: 1.1rem;
+    }
     margin: 10px 0px;
+    color: white;
   }
   .customer-info{
     display: flex;
@@ -799,17 +972,22 @@ a{
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 30px;
+  @media screen and (max-width: 900px){
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+  }
   .category{
     border-style: none;
     border-radius: 5px;
-    background-color: rgba($color: #000000, $alpha: .7);
-    box-shadow: 1px 1px 2px black;
+    background-color: $dark-accent;
     box-sizing: border-box;
     padding: 10px;
     display: grid;
     grid-template-rows: 1fr 4fr;
     h2{
       margin: 0px;
+      color: white;
     }
     table{
       display: flex;
@@ -818,7 +996,7 @@ a{
         display: flex;
         justify-content: space-between;
         border-bottom: solid;
-        border-color: rgb(94, 94, 94);
+        border-color: $light-accent;
         border-collapse: collapse;
         border-width: 1px;
         td{
@@ -845,6 +1023,9 @@ a{
 }
 
 .checkout-confirm-container{
+  @media screen and (max-width: 900px){
+    width: 90%;
+  }
   width: 40%;
   height: 30%;
   background-color: #dfdfdf;
@@ -891,6 +1072,10 @@ a{
 }
 
 .tos{
+  @media screen and (max-width: 900px){
+    width: 90%;
+    height: 80%;
+  }
   height: 600px;
   width: 500px;
   background-color: #dfdfdf;
@@ -923,8 +1108,11 @@ a{
 }
 
 .confirmation-page{
+  @media screen and (max-width: 900px){
+    width: 100%;
+  }
   width: 50%;
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
@@ -932,6 +1120,7 @@ a{
   padding: 10px;
   h2{
     margin: 0px;
+    color: white;
   }
   p{
     color: white;
@@ -948,7 +1137,7 @@ a{
         text-align: left;
         border-style: none;
         border-bottom: solid;
-        border-color: #525252;
+        border-color: $light-accent;
         border-width: 1px;
       }
       td{
@@ -973,9 +1162,13 @@ a{
 }
 
 .login-section{
+  @media screen and (max-width: 900px){
+    height: 70%;
+    width: 90%;
+  }
   width: 30%;
   height: 100%;
-  background-color: rgba($color: #000000, $alpha: .7);
+  background-color: $dark-accent;
   border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
@@ -989,6 +1182,7 @@ a{
   gap: 20px;
   h2{
     margin: 0px;
+    color: white;
   }
   form{
     display: flex;
@@ -1004,7 +1198,7 @@ a{
       width: 80%;
       border-style: solid;
       border-color: white;
-      border-width: 1px;
+      border-width: 2px;
       background-color: transparent;
       color: white;
       transition: .2s ease-in;
@@ -1162,4 +1356,10 @@ a{
 
 .total{
   font-weight: 500;
+}
+
+.link{
+  color: #a21f37;
+  text-decoration: underline;
+  cursor: pointer;
 }

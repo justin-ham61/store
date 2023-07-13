@@ -88,7 +88,7 @@ const Register = () => {
     <div className='register-section'>
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className='desktop-regis'>
                     <div className='input-section'>
                         <label htmlFor="">First Name</label>
                         <input type="text" name="firstName" id="" placeholder='Ex. John' onChange={handleChange} required/>
