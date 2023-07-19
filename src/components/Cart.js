@@ -33,7 +33,7 @@ const Cart = () => {
         if(authResult){
             navigate('/Checkout')
         } else {
-            navigate('/Register')
+            navigate('/Login')
         }
     }
 

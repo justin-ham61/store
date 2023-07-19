@@ -1,19 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql')
-const session = require('express-session');
-const { route } = require('./Auth');
-
 const { Item, sendMail } = require('../utils/AdminFunc');
 const { Order } = require('../utils/OrderFunc')
+const {mysqlKey} = require('../utils/const/key')
 
-const db = mysql.createConnection({
-    host: 'database-1.cbrwxevd9t8e.us-west-2.rds.amazonaws.com',
-    user: 'admin',
-    password: 'Blue4524.',
-    database: 'store',
-    port: '3306'
-});
+const db = mysql.createConnection(mysqlKey);
+const { User } = require('../utils/AuthFunc')
 
 db.connect((err) => {
     if (err) throw err;
@@ -40,6 +33,25 @@ router.get('/GetOrders', async (req, res) => {
     let orderResults = await Order.get();
     let customerResults = await Order.getCustomerInfo();
     res.json({orderResults: orderResults, customerResults : customerResults})
+})
+
+router.get('/GetCustomers', async (req, res) => {
+    try{
+        const customers = await User.findAll();
+        res.send(customers)
+    } catch {
+        console.log(err)
+    }
+})
+
+router.get('/GetCustomerOrders/:customer_id', async (req, res) => {
+    const customer_id = req.params.customer_id;
+    try{
+        const result = await Order.getOrdersById(customer_id)
+        res.send(result)
+    } catch {
+        console.log(err)
+    }
 })
 
 router.post('/SendContactEmail', async (req, res) => {

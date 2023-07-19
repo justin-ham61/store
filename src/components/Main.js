@@ -25,6 +25,7 @@ const Main = () => {
           <div className='overlay'></div>
             <MainContent/>
         </div>
+        
     </Router>
   )
 }

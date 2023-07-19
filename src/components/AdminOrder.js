@@ -23,6 +23,7 @@ const AdminOrder = () => {
         setOrderId(order.order_id);
         setUserInfo(user)
     }
+    
 
   return (
       <div className='admin-order-section'>

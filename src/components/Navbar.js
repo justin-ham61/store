@@ -6,7 +6,7 @@ import axios from 'axios';
 import {AuthContext} from './AuthContext';
 import logo from './images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faShirt, faCartShopping, faUser, faDollarSign, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 
 const Navbar = ({menu, handleKeyDown, handleClick}) => {
@@ -32,7 +32,17 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
 
   useEffect(() => {
     toggleAccountMenu(false)
+    toggleMobileMenu(false)
   },[menu])
+
+  const handleNavClick = () => {
+    if(accountMenu){
+      toggleAccountMenu(false)
+    }
+    if(mobileMenu){
+      toggleMobileMenu(false)
+    }
+  }
 
   const navVariant = {
       initial: {
@@ -48,11 +58,26 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
         opacity: 0
       }
   }
+  const mobileNavVariant = {
+    initial:{
+      translateX: 1000,
+    },
+    in: {
+      translateX: 0
+    },
+    out: {
+      translateX: 1000
+    }
+  }
+
+  const mobileNavTransition = {
+
+  }
 
   const navTransition = {
     type: 'tween',
     ease: 'linear',
-    duration: .2,
+    duration: .3,
   }
 
   const logOut = () => {
@@ -87,13 +112,20 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
   }
 
   return (
-    <div className="navbar" onKeyDown={handleKeyDown} tabIndex={0} onClick={handleClick}>
+    <div className="navbar" onKeyDown={handleKeyDown} tabIndex={0} onClick={handleClick} onClick={handleNavClick}>
       <AnimatePresence mode='wait'>
         {mobileMenu ? 
-         <motion.div className='mobile-menu'>
+         <motion.div 
+            className='mobile-menu' onClick={() => toggleMobileMenu(false)}
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={navVariant}
+            transition={navTransition}
+            >
             <nav>
               <ul>
-                  <li onClick={() => goTo('Prices')}>Prices</li>
+                  <li onClick={() => goTo('Prices')}>Prices <FontAwesomeIcon icon={faDollarSign} /></li>
                   <li onClick={() => goTo('Items')}>Configurator</li>
                   <li onClick={() => goTo('Contact')}>Contact</li>
                   {authenticated && userInfo.isAdmin === 1 ? 
@@ -102,10 +134,11 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
                     null
                   }
                   {authenticated ? 
-                  <li onClick={() => toggleAccountMenu(!accountMenu)}>Account</li>
+                  <li onClick={() => toggleAccountMenu(!accountMenu)}>Account <FontAwesomeIcon icon={faUser}/></li>
                   :
                   <li onClick={() => goTo('Login')}>Sign In</li>
                   }
+                  <li onClick={() => goTo('Cart')}>Cart <FontAwesomeIcon icon={faCartShopping}/></li>
               </ul>
             </nav>
          </motion.div>
@@ -135,6 +168,7 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
                 :
                 <li><Link to="/Login">Sign In</Link></li>
                 }
+                <li><Link to="/Cart">Cart <FontAwesomeIcon icon={faCartShopping}/></Link></li>
             </ul>
           </nav>
         </div>
@@ -152,10 +186,22 @@ const Navbar = ({menu, handleKeyDown, handleClick}) => {
               :
               <>
               <h3>Hi, { userInfo.first_name }!</h3>
-              <h3 onClick={myOrder}>My Orders</h3>
-              <h3 onClick={myAccount}>My Account</h3>
-              <h3 onClick={myCart}>My Cart</h3>
-              <h3 onClick={() => logOut()} className='logout-btn'>Sign Out</h3>
+              <div className='menu-item'>
+                <h3 onClick={myAccount}>My Account</h3>
+                <FontAwesomeIcon icon={faUser} />
+              </div>
+              <div className='menu-item'>
+                <h3 onClick={myOrder}>My Orders</h3>
+                <FontAwesomeIcon icon={faShirt} />
+              </div>
+              <div className='menu-item'>
+                <h3 onClick={myCart}>My Cart</h3>
+                <FontAwesomeIcon icon={faCartShopping} />
+              </div>
+              <div className='menu-item'>
+                <h3 onClick={() => logOut()} className='logout-btn'>Sign Out</h3>
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
+              </div>
               </>
           }
           </motion.div>

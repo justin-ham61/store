@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import AdminOrder from './AdminOrder'
+import AdminNav from './AdminNav'
+import AdminCustomers from './AdminCustomers'
 
 const Admin = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +15,7 @@ const Admin = () => {
     })
 
     const [ listItems, setListItems ] = useState([]);
-
+    const [ activeElement, setActiveElement ] = useState('orders')
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -72,7 +74,18 @@ const Admin = () => {
     }
   return (
     <div className='admin-section'>
+        <AdminNav setActiveElement={setActiveElement} activeElement={activeElement}/>
+        {activeElement === 'orders' ?
         <AdminOrder/>
+        :
+        null
+        }
+        {activeElement === 'customers' ? 
+        <AdminCustomers/>
+        :
+        null
+        }
+        {activeElement === 'items' ?
         <div className='items'>
             <form>
                 <p>Add Items</p>
@@ -108,6 +121,9 @@ const Admin = () => {
             <button type='button' onClick={getItems}>getItems</button>
             <p>{formData.itemCategory}</p>
         </div>
+        :
+        null 
+        }
     </div>
   )
 }

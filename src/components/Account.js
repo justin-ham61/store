@@ -57,7 +57,6 @@ const Account = () => {
   },[])
   return (
     <div className='account-section'>
-      
         <h2>My Account</h2>
         <div className='account-info-container'>
         <div>

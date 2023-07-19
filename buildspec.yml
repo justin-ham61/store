@@ -16,6 +16,6 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'backend/build' # adjust this according to your directory structure
+  base-directory: build
 
 

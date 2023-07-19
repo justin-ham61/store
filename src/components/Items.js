@@ -6,19 +6,29 @@ import { faCircleMinus, faCirclePlus, faCartShopping, faPlus } from '@fortawesom
 import { animation } from './hoc'
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import 'font-awesome/css/font-awesome.min.css';
+
 
 const Items = () => {
     let navigate = useNavigate();
     const [ listItems, setListItems ] = useState([]);
 
     //0 = dry, 1 = laundry, 2 = other
-    const [ category, setCategory ] = useState({});
+    const [ category, setCategory ] = useState({
+        'Tops': [],
+        'Bottoms': [],
+        'Fullbody': [],
+        'Accessories': [],
+        'Households': [],
+        'Others': []
+    });
+    const [ filteredCategory, setFilteredCategory ] = useState({})
     const [ itemSelection, setItemSelection ] = useState({});
     const [ cart, setCart ] = useState({});
     const [ cartLength, setCartLength ] = useState(0);
     const [ takeToCart, setTakeToCart] = useState(false)
-
-
+    const [ searchField, setSearchField ] = useState('')
+    
     const categorizeItems = (items) => {
         let categories = {
             'Tops': [],
@@ -28,7 +38,6 @@ const Items = () => {
             'Households': [],
             'Others': []
         }
-
         listItems.map((item) => {
             if (item.category === 'Tops'){
                 categories.Tops.push(item)
@@ -46,22 +55,76 @@ const Items = () => {
         })
         return categories
     }
-
-
+    
     useEffect(() => {
         setListItems([])
         getItems();
     },[])
 
+    const handleSearchChange = (e) => {
+        setSearchField(e.target.value)
+    }
+
+    useEffect(() => {
+        const filteredArrayTops = category.Tops.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        const filteredArrayBottoms = category.Bottoms.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        const filteredArrayFullbody = category.Fullbody.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        const filteredArrayAccessories = category.Accessories.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        const filteredArrayHouseholds = category.Households.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        const filteredArrayOthers = category.Others.filter(
+            item => {
+                return(
+                    item.item_name.toLowerCase().includes(searchField.toLowerCase())
+                )
+            }
+        )
+        console.log(filteredArrayTops)
+        setFilteredCategory({...filteredCategory, 
+            'Tops': filteredArrayTops, 
+            'Bottoms': filteredArrayBottoms,
+            'Fullbody': filteredArrayFullbody,
+            'Accessories': filteredArrayAccessories,
+            'Households': filteredArrayHouseholds,
+            'Others': filteredArrayOthers
+        })
+    },[searchField])
+
     useEffect(() => {
         const categorizedItems = categorizeItems(listItems);
         setCategory(categorizedItems)
-        console.log(category)
+        setFilteredCategory(categorizedItems)
     }, [listItems])
-    
-    const toggleCategory = (x) => {
-        console.log("clicked" + x);
-    }
+
 
     const getItems = async () => {
         axios.get('/Admin/GetItems')
@@ -150,23 +213,25 @@ const Items = () => {
                     }
                 </div>
                 <div className='shopping-cart pointer-cursor' onClick={navigateToCart}>
+                    <p>Cart</p>
                     {cartLength > 0 ? 
                     <FontAwesomeIcon icon={faCartShopping} beat size="xl" onClick={navigateToCart} className='pointer-cursor'/>
                     :
                     <FontAwesomeIcon icon={faCartShopping} size="xl" onClick={navigateToCart} className='pointer-cursor'/>
                     }
-                    <p>Cart</p>
                 </div>
+        </div>
+        <div className='item-search-bar'>
+            <input type="search" name="item-search" id="" onChange={handleSearchChange} placeholder="Search for Items "/>
         </div>
         <div className='item-wrapper'>
             <div className='items'>
-                {Object.entries(category).map(([i, x]) => {
+                {Object.entries(filteredCategory).map(([i, x]) => {
                     return (
-                    <div key={i} className='item-category-box'>
+                    <div key={i} className={x.length === 0 ? 'none' : 'item-category-box'}>
                         <h2 className='category-header'>{i.toUpperCase()}</h2>
                         {x.map((item, index) => {
                             return(
-
                             <div className='item' key={item.item_id}>
                                 <div className='item-info'>
                                     <p className='.prevent-select'>{item.item_name} - ${item.item_price}</p>
@@ -183,6 +248,14 @@ const Items = () => {
                     )
                 })}
             </div>
+        </div>
+        <div className='items-bottom'>
+            <button className='item-section-btn' type='button' onClick={submitToCart}>{cartLength === 0 ? 'Add Selection to Cart' : 'Update Cart'}</button>
+            {cartLength > 0 ? 
+            <button id='red' className='item-section-btn' type='button' onClick={clearCart}>Clear Cart</button>
+            :
+            null
+            }
         </div>
     </div>
   )

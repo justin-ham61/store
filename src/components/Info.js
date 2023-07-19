@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
+import { faYelp } from '@fortawesome/free-brands-svg-icons';
 import { animation } from './hoc'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -125,9 +126,15 @@ const Info = () => {
             </ul>
         </div>
         <div className='bottom-right'>
-            <h2>Location</h2>
-            <p>1739 W San Carlos St</p>
-            <p>San Jose, CA 95128</p>
+            <div>
+                <h2>Location</h2>
+                <h3>1739 W San Carlos St</h3>
+                <h3>San Jose, CA 95128</h3>
+            </div>
+            <div>
+                <h2>Find Us On</h2>
+                <FontAwesomeIcon icon={faYelp} />
+            </div>
         </div>
       </div>
     </div>
