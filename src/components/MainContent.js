@@ -1,10 +1,9 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Info from './Info';
 import Items from './Items';
 import Login from './Login';
-import Register from './Register';
 import Contact from './Contact';
 import Express from './Express';
 import Account from './Account';
@@ -15,6 +14,7 @@ import Checkout from './Checkout';
 import Prices from './Prices';
 import Confirmation from './Confirmation';
 import RegisterV2 from './RegisterV2';
+import WetClean from './WetClean';
 
 const MainContent = () => {
   return (
@@ -33,6 +33,7 @@ const MainContent = () => {
             <Route path="/Checkout" element={<Checkout/>}/>
             <Route path="/Prices" element={<Prices/>}/>
             <Route path="/Confirmation" element={<Confirmation/>}/>
+            <Route path="WetClean" element={<WetClean/>}/>
         </Routes>
       </AnimatePresence>
   )

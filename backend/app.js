@@ -3,6 +3,12 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 const app = express();
+app.use(function(req, res, next){
+  if(req.headers['x-forwarded-proto'] !== 'https' || !req.headers.host.startsWith('www.')){
+    return res.redirect(301, `https://www.${req.headers.host}${req.url}`)
+  }
+  next();
+})
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
@@ -55,6 +61,8 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -62,10 +70,15 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 // Routes ------------------------------------------------------------------
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build'));
+    app.use(function(req, res) {
+      res.status(404).redirect('/');
+    });
   });
 
 app.get('/Auth/VerifyEmail/:crypt', async (req, res) => {
@@ -76,9 +89,9 @@ app.get('/Auth/VerifyEmail/:crypt', async (req, res) => {
     if(customer){
       User.updateCustomerVerification(customer.customer_id)
       User.deleteVerificationCrypt(customer.customer_id)
-      res.redirect(302, 'http://localhost:3001?state=verified')
+      res.redirect(302, 'https://www.casadecleaners.com?state=verified')
     } else {
-      res.redirect(302, 'http://localhost:3001?state=notverified')
+      res.redirect(302, 'https://www.casadecleaners.com?state=notverified')
     }
 })
 

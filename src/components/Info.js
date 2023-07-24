@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { faYelp } from '@fortawesome/free-brands-svg-icons';
 import { animation } from './hoc'
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
+import googleMapsLogo from './images/google-maps-2020-icon.svg'
 
 const Info = () => {
     let navigate = useNavigate();
@@ -24,10 +24,6 @@ const Info = () => {
     },[location])
 
     const [orderType, toggleOrderType] = useState('Express');
-    const orderTypeArray = [
-        'Express',
-        'Custom'
-    ]
 
     const cart = {
         Express: '1'
@@ -48,6 +44,12 @@ const Info = () => {
     const navigateToConfig = () => {
         navigate('/Items')
     }
+    const linkTo = (url) => {
+        window.open(url, "_blank", "noreferrer");
+    }
+    const goTo = (url) => {
+        navigate(`${url}`)
+    }
   return (
     
     <div className='info'>
@@ -57,11 +59,11 @@ const Info = () => {
             <div className='left-main'>
                 <div className='instructions'>
                     <div className='chevs'>
-                        <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft} beat/></div>
+                        <div className='chev' onClick={() => orderType === "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronLeft} beat/></div>
                         <h3 className='bold'>{orderType}</h3>
-                        <div className='chev' onClick={() => orderType == "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronRight} beat/></div>
+                        <div className='chev' onClick={() => orderType === "Express" ? toggleOrderType("Custom") : toggleOrderType("Express")}><FontAwesomeIcon icon={faChevronRight} beat/></div>
                     </div>
-                    {orderType == "Express" ? 
+                    {orderType === "Express" ? 
                     <div>
                         <ol>
                             <li><p>Gather all items to be laundered</p></li>
@@ -74,6 +76,7 @@ const Info = () => {
                             <li><p>We will categorize all garments and notify you of our count!</p></li>
                         </ol>
                         <div className='notice'>
+                            <p className='dark-accent'>*Recommendation: Create an account and place an express order and we will contact you to guide you through the entire process!</p>
                             <p>*As we do not have an online payment portal, Payment will be taken in-person after the garment has been delivered</p>
                         </div>
                     </div> : 
@@ -89,6 +92,7 @@ const Info = () => {
                             <li><p>Await email regarding pick up instructions</p></li>
                         </ol>
                         <div className='notice'>
+                            <p className='dark-accent'>*Recommendation: Create an account and place an express order and we will contact you to guide you through the entire process!</p>
                             <p>*As we do not have an online payment portal, Payment will be taken in-person after the garment has been delivered</p>
                         </div>
                     </div> 
@@ -104,11 +108,15 @@ const Info = () => {
         <div className='left-right'>
             <h2>About Us</h2>
             <div className='info-about'>
-                <h3>History</h3>
-                <p>We've been proudly serving the community since 2008</p>
-                <h3>Our Methods</h3>
-                <p>Our special method of garment cleaning sets us apart from others by using enviromentally friendly methods that are safer for all of us</p>
-                <h3></h3>
+                <div>
+                    <h3>History</h3>
+                    <p>We have been proudly serving the community since 2008. Always doing our best to create a great experience during your garment cleaning needs!</p>
+                </div>
+                <div>
+                    <h3>What sets us apart</h3>
+                    <p>Compared to the vast majority of dry cleaners that use Perchloroethlene to clean garmenets, we at Casa de Cleaners use a process known as Wet Cleaning to wash your beloved garments! Wet cleaning uses solvents that protect clothes from damage, and ensures that your garments don't shrink in the drying process.</p>
+                    <p className='link none' onClick={() => goTo('/WetClean')}>Click to learn more about Wet Cleaning</p>
+                </div>
             </div>
         </div>
       </div>
@@ -131,9 +139,16 @@ const Info = () => {
                 <h3>1739 W San Carlos St</h3>
                 <h3>San Jose, CA 95128</h3>
             </div>
-            <div>
+            <div className='find-us'>
                 <h2>Find Us On</h2>
-                <FontAwesomeIcon icon={faYelp} />
+                <div className='find-us-icon'>
+                    <div onClick={()=>linkTo('https://www.yelp.com/biz/casa-de-cleaners-san-jose?osq=casa+de+cleaners')} className='clickable'>
+                        <FontAwesomeIcon icon={faYelp} className='yelp' /> <p className='link'>Yelp</p>
+                    </div>
+                    <div onClick={()=>linkTo('https://www.google.com/maps/place/Casa+De+Cleaners/@37.3237566,-121.923089,17z/data=!4m6!3m5!1s0x808fcb4746d93bc3:0x71593f06b658f770!8m2!3d37.3238729!4d-121.9230581!16s%2Fg%2F1tdxl33_?entry=ttu')} className='clickable'>
+                        <img src={googleMapsLogo} alt="" className='map'/> <p className='link'>Google Maps</p>
+                    </div>
+                </div>
             </div>
         </div>
       </div>
