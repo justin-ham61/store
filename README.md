@@ -33,8 +33,7 @@ All essential data, including customer details, order records, and transactions,
 
 ## ⚙️ Setup and Installation
 
-1. Clone the repository: `git clone <repo-link>`
-2. Navigate to the project directory: `cd <project-directory>`
-3. Install dependencies: `npm install`
-4. Start the server: `npm start`
-5. Visit `http://localhost:<port>` in your browser.
+1. Clone the repository: `git clone https://github.com/justin-ham61/store.git`
+2. Install dependencies: `npm install`
+3. Start the server: `npm start`
+4. Visit `http://localhost:3000` in your browser.
