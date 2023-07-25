@@ -16,12 +16,13 @@ All essential data, including customer details, order records, and transactions,
 ## 📌 Key Features
 
 1. **Customer Accounts**: A secure login system for customers to manage their orders, view history, and track ongoing orders.
-2. **Admin Access**: A dedicated interface for service providers to review, edit, and manage orders in real time.
-3. **Order Management**: Easy order placement with customizable pick-up and delivery times.
+2. **Order Configuration**: Customers can choose to configure their orders with specific items or order VIA Express for a hassle free experience. 
+3. **Admin Access**: A dedicated interface for service providers to review, edit, and manage orders in real time.
+4. **Order Management**: Easy order placement with customizable pick-up and delivery times.
 
 ## 📸 Screenshots
+![Homepage Screenshot](https://user-images.githubusercontent.com/109255423/255767102-4ed92e1f-a426-4141-9176-1593dc1da49a.png)
 
-_Add screenshots of the project here for better understanding of the interface._
 
 ## ⚙️ Setup and Installation
 
