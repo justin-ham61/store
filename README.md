@@ -21,7 +21,14 @@ All essential data, including customer details, order records, and transactions,
 4. **Order Management**: Easy order placement with customizable pick-up and delivery times.
 
 ## 📸 Screenshots
+**Homepage Screenshot**
 ![Homepage Screenshot](https://user-images.githubusercontent.com/109255423/255767102-4ed92e1f-a426-4141-9176-1593dc1da49a.png)
+**Order Configurator**
+![Order Configurator](https://user-images.githubusercontent.com/109255423/255767146-a655ae5a-300d-4bfb-956b-401d5e4a0326.png)
+**Admin Order Panel**
+![Admin Order Panel](https://user-images.githubusercontent.com/109255423/255767910-e08f84a2-dfea-4c6f-9b6f-a316c0ecfab2.png)
+**Admin Customer Search**
+![Admin Customer Search](https://user-images.githubusercontent.com/109255423/255768044-eadb2c91-514a-4c12-881d-19a0e35fbf8e.png)
 
 
 ## ⚙️ Setup and Installation
