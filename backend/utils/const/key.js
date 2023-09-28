@@ -10,7 +10,7 @@ const sessionOptions = {
     secret: process.env.secretKey
 
 }
-
+const hello = "hol"
 module.exports = {
     mysqlKey,
     sessionOptions
